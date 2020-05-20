@@ -2,47 +2,25 @@ import { Router } from 'express';
 import multer from 'multer';
 import uploadConfig from '@config/upload';
 
-import CreateUserService from '@modules/users/services/CreateUserService';
-import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarService';
-
-import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
+import UsersController from '@modules/users/infra/http/controllers/UsersController';
+import UsersAvatarController from '@modules/users/infra/http/controllers/UserAvatarController';
 
 const userRouter = Router();
+const userController = new UsersController();
+const userAvatarController = new UsersAvatarController();
+
 const upload = multer(uploadConfig);
+
 // Rota: Recever a requisição, chamar outro arquivo e devolver uma resposta
 
-userRouter.post('/', async (request, response) => {
-  const { name, email, password } = request.body;
-
-  const createUser = new CreateUserService();
-
-  const user = await createUser.execute({
-    name,
-    email,
-    password,
-  });
-
-  delete user.password;
-
-  return response.json(user);
-});
+userRouter.post('/', userController.create);
 
 userRouter.patch(
   '/avatar',
   ensureAuthenticated,
   upload.single('avatar'),
-  async (request, response) => {
-    const updateUserAvatar = new UpdateUserAvatarService();
-
-    const user = await updateUserAvatar.execute({
-      user_id: request.user.id,
-      avatarFilename: request.file.filename,
-    });
-
-    delete user.password;
-
-    return response.json(user);
-  },
+  userAvatarController.update,
 );
 
 export default userRouter;

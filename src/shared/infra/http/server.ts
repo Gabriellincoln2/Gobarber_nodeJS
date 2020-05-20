@@ -9,6 +9,7 @@ import AppError from '@shared/errors/AppError';
 import routes from './routes';
 
 import '@shared/infra/typeorm';
+import '@shared/container';
 
 const app = express();
 app.use(cors()); // Permite de forma segura o uso das API's no front-end apenas para aplicações WEB

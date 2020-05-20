@@ -1,24 +1,11 @@
 import { Router } from 'express';
-
-import AuthenticateUserService from '@modules/users/services/AuthenticateUserService';
+import SessionController from '@modules/users/infra/http/controllers/SessionsController';
 
 const sessionnsRouter = Router();
+const sessionnsControle = new SessionController();
 
 // Rota: Recever a requisição, chamar outro arquivo e devolver uma resposta
 
-sessionnsRouter.post('/', async (request, response) => {
-  const { email, password } = request.body;
-
-  const authenticateUser = new AuthenticateUserService();
-
-  const { user, token } = await authenticateUser.execute({
-    email,
-    password,
-  });
-
-  delete user.password;
-
-  return response.json({ user, token });
-});
+sessionnsRouter.post('/', sessionnsControle.create);
 
 export default sessionnsRouter;
