@@ -14,7 +14,7 @@ import '@shared/container';
 const app = express();
 app.use(cors()); // Permite de forma segura o uso das API's no front-end apenas para aplicações WEB
 app.use(express.json());
-app.use('/files', express.static(uploadConfig.directory));
+app.use('/files', express.static(uploadConfig.uploadsFolder));
 app.use(routes);
 
 app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
