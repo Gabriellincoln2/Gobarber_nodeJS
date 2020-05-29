@@ -1,6 +1,6 @@
 // Cada service terá ao menos 1 aquivo de teste,
 // onde esse arquivo de teste pode fazer vários testes
-import AppError from '@shared/errors/AppError';
+// import AppError from '@shared/errors/AppError';
 
 import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
 import ListProviderService from './ListProviderService';

@@ -2,9 +2,10 @@
 // os nossos testes, onde armazenamos os arquivos
 
 import { uuid } from 'uuidv4';
-import { isEqual } from 'date-fns';
+import { isEqual, getMonth, getYear } from 'date-fns';
 
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
+import IFindAllInMonthFromProviderDTO from '@modules/appointments/dtos/IFindAllInMonthFromProviderDTO';
 import IAppointmentRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
@@ -17,6 +18,21 @@ class AppointmentsRepository implements IAppointmentRepository {
       isEqual(appointment.date, date),
     );
     return findAppointment;
+  }
+
+  public async findAllInMonthFromProvider({
+    provider_id,
+    month,
+    year,
+  }: IFindAllInMonthFromProviderDTO): Promise<Appointment[]> {
+    const appointments = this.appointment.filter(appointment => {
+      return (
+        appointment.provider_id === provider_id &&
+        getMonth(appointment.date) + 1 === month && // tem que colocar o +1 para corrigir que o janeiro começa com 0
+        getYear(appointment.date) === year
+      );
+    });
+    return appointments;
   }
 
   public async create({
