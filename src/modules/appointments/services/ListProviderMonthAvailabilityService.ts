@@ -1,4 +1,5 @@
 import { injectable, inject } from 'tsyringe';
+import { getDaysInMonth, getDate } from 'date-fns';
 
 // import User from '@modules/users/infra/typeorm/entities/User';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
@@ -33,9 +34,24 @@ class ListProviderMonthAvailabilityService {
         year,
       },
     );
-    console.log(appoitments);
 
-    return [{ day: 1, available: false }];
+    const numberOfDaysInMonth = getDaysInMonth(new Date(year, month - 1));
+
+    const eachDayArray = Array.from(
+      { length: numberOfDaysInMonth },
+      (_, index) => index + 1,
+    );
+    const availability = eachDayArray.map(day => {
+      const appointmentsInDay = appoitments.filter(appoitment => {
+        return getDate(appoitment.date) === day;
+      });
+
+      return {
+        day,
+        available: appointmentsInDay.length < 10,
+      };
+    });
+    return availability;
   }
 }
 
