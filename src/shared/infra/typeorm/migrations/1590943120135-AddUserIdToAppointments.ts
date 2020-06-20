@@ -16,6 +16,7 @@ export default class AddUserIdToAppointments1590943120135
         isNullable: true,
       }),
     );
+
     await queryRunner.createForeignKey(
       'appointments',
       new TableForeignKey({
@@ -30,7 +31,8 @@ export default class AddUserIdToAppointments1590943120135
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('appointments', 'AppointmentProvider');
+    await queryRunner.dropForeignKey('appointments', 'AppointmentUser');
+
     await queryRunner.dropColumn('appointments', 'user_id');
   }
 }

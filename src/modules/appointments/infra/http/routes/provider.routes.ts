@@ -6,6 +6,7 @@ import ProviderMonthAvailabilityController from '@modules/appointments/infra/htt
 import ProviderDayAvailabilityController from '@modules/appointments/infra/http/controllers/ProviderDayAvailabilityController';
 
 const providersRouter = Router();
+
 const providersController = new ProvidersController();
 const providerMonthAvailabilityController = new ProviderMonthAvailabilityController();
 const providerDayAvailabilityController = new ProviderDayAvailabilityController();
