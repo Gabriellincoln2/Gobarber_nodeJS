@@ -11,7 +11,7 @@ const userRouter = Router();
 const userController = new UsersController();
 const userAvatarController = new UsersAvatarController();
 
-const upload = multer(uploadConfig);
+const upload = multer(uploadConfig.multer);
 
 // Rota: Recever a requisição, chamar outro arquivo e devolver uma resposta
 

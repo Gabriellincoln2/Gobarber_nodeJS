@@ -1,9 +1,7 @@
-// Aqui é onde fica as dependencias dos services???
-
 import { container } from 'tsyringe';
 
 import '@modules/users/providers';
-import './providers';
+import '@shared/container/providers';
 
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 import AppointmentsRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentsRepository';
@@ -11,7 +9,7 @@ import AppointmentsRepository from '@modules/appointments/infra/typeorm/reposito
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 
-import IUsersTokensRepository from '@modules/users/repositories/IUsersTokensRepository';
+import IUserTokensRepository from '@modules/users/repositories/IUsersTokensRepository';
 import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
 
 import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
@@ -27,7 +25,7 @@ container.registerSingleton<IUsersRepository>(
   UsersRepository,
 );
 
-container.registerSingleton<IUsersTokensRepository>(
+container.registerSingleton<IUserTokensRepository>(
   'UserTokensRepository',
   UserTokensRepository,
 );

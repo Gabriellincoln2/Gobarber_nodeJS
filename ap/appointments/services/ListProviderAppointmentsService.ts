@@ -1,7 +1,7 @@
-import { injectable, inject } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 
-import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
+import Appointments from '../infra/typeorm/entities/Appointments';
 
 interface IRequest {
   provider_id: string;
@@ -11,10 +11,10 @@ interface IRequest {
 }
 
 @injectable()
-class ListProviderAppointmentService {
+class ListProviderAppointmentsService {
   constructor(
     @inject('AppointmentsRepository')
-    private appoitmentsRepository: IAppointmentsRepository,
+    private appointmentsRepository: IAppointmentsRepository,
   ) {}
 
   public async execute({
@@ -22,8 +22,8 @@ class ListProviderAppointmentService {
     day,
     month,
     year,
-  }: IRequest): Promise<Appointment[]> {
-    const appointments = await this.appoitmentsRepository.findAllInDayFromProvider(
+  }: IRequest): Promise<Appointments[]> {
+    const appointments = await this.appointmentsRepository.findAllInDayFromProvider(
       {
         provider_id,
         day,
@@ -36,4 +36,4 @@ class ListProviderAppointmentService {
   }
 }
 
-export default ListProviderAppointmentService;
+export default ListProviderAppointmentsService;
